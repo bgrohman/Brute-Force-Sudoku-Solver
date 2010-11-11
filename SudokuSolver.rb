@@ -28,9 +28,9 @@ class Sudoku
     def solve!
         @num_guesses = 0
         r = solve_from! 0, 1
-		while r != nil
-			r = solve_from! r[0], r[1]
-		end
+        while r != nil
+            r = solve_from! r[0], r[1]
+        end
     end
 
     private
@@ -41,45 +41,45 @@ class Sudoku
             raise "Invalid puzzle index #{index} after #{@num_guesses} guesses"
         end
 
-		last_valid_guess_index = nil
-		found_valid_guess = false
-		(index...@puzzle.length).each do |i|
-			unless @known_indices.include? i
-				found_valid_guess = false
-				(starting_guess..@n).each do |guess|
-					@num_guesses += 1
-					if valid? i, guess
-						found_valid_guess = true
-						last_valid_guess_index = i
-						@puzzle[i] = guess
-						break
-					end
-				end
-				starting_guess = 1
+        last_valid_guess_index = nil
+        found_valid_guess = false
+        (index...@puzzle.length).each do |i|
+            unless @known_indices.include? i
+                found_valid_guess = false
+                (starting_guess..@n).each do |guess|
+                    @num_guesses += 1
+                    if valid? i, guess
+                        found_valid_guess = true
+                        last_valid_guess_index = i
+                        @puzzle[i] = guess
+                        break
+                    end
+                end
+                starting_guess = 1
 
-				if not found_valid_guess
-					break
-				end
-			end
-		end
+                if not found_valid_guess
+                    break
+                end
+            end
+        end
 
-		if not found_valid_guess
-			new_index = index - 1
-			new_index = last_valid_guess_index unless last_valid_guess_index == nil
-			new_starting_guess = @puzzle[new_index] + 1
+        if not found_valid_guess
+            new_index = index - 1
+            new_index = last_valid_guess_index unless last_valid_guess_index == nil
+            new_starting_guess = @puzzle[new_index] + 1
 
-			reset_puzzle_at new_index
+            reset_puzzle_at new_index
 
-			while new_starting_guess > @n or @known_indices.include? new_index
-				new_index -= 1
-				new_starting_guess = @puzzle[new_index] + 1
-				reset_puzzle_at new_index
-			end
+            while new_starting_guess > @n or @known_indices.include? new_index
+                new_index -= 1
+                new_starting_guess = @puzzle[new_index] + 1
+                reset_puzzle_at new_index
+            end
 
-			return [new_index, new_starting_guess]
-		else
-			return nil
-		end
+            return [new_index, new_starting_guess]
+        else
+            return nil
+        end
     end
 
     def reset_puzzle_at index
@@ -125,19 +125,19 @@ class Sudoku
         block_row = (row_index / @b).floor
         block_col = (col_index / @b).floor
 
-		row_start = block_row * @b
-		row_end = row_start + @b - 1
-		col_start = block_col * @b
-		col_end = col_start + @b - 1
+        row_start = block_row * @b
+        row_end = row_start + @b - 1
+        col_start = block_col * @b
+        col_end = col_start + @b - 1
 
-		(row_start..row_end).each do |r|
-			(col_start..col_end).each do |c|
-				i = c + (r * @n)
-				if @puzzle[i] == guess
-					return false
-				end
-			end
-		end
+        (row_start..row_end).each do |r|
+            (col_start..col_end).each do |c|
+                i = c + (r * @n)
+                if @puzzle[i] == guess
+                    return false
+                end
+            end
+        end
 
         return true
     end
