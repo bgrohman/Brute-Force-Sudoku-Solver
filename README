@@ -1,0 +1,7 @@
+Solves sudoku puzzles stored as text files using a brute force algorithm.
+
+Example sudoku puzzles are included (sudoku1.txt, sudoku2.txt, etc).
+
+To run:
+ruby SudokuSolver.rb <puzzle_file>
+
