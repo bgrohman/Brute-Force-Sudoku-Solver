@@ -26,11 +26,13 @@ class Sudoku
     end
 
     def solve!
+        start_time = Time.now
         @num_guesses = 0
         r = solve_from! 0, 1
         while r != nil
             r = solve_from! r[0], r[1]
         end
+        return Time.now - start_time
     end
 
     private
@@ -173,8 +175,10 @@ if __FILE__ == $0
     puts
 
     puts 'Solution:'
-    s.solve!
+    time = s.solve!
     puts s.to_s.split '\n'
+    puts
     puts "Number of guesses: #{s.num_guesses}"
+    puts "Total time: #{time} seconds"
     puts
 end
