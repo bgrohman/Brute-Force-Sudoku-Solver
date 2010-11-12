@@ -1,6 +1,6 @@
 Solves sudoku puzzles stored as text files using a brute force algorithm.
 
-Example sudoku puzzles are included (sudoku1.txt, sudoku2.txt, etc).
+Example sudoku puzzles are included (sudoku1.txt, sudoku2.txt, etc). Most puzzles I've run take a few seconds to solve. The sudoku5.txt example takes the longest time at 155 seconds (>3 million guesses). Example 5 is from this article, which claims to have the hardest puzzle: http://www.usatoday.com/news/offbeat/2006-11-06-sudoku_x.htm
 
 To run:
 ruby SudokuSolver.rb <puzzle_file>
