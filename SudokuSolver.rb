@@ -179,6 +179,10 @@ if __FILE__ == $0
     puts s.to_s.split '\n'
     puts
     puts "Number of guesses: #{s.num_guesses}"
-    puts "Total time: #{time} seconds"
+    if time < 60
+        puts "Total time: #{time} seconds"
+    else
+        puts "Total time: #{time/60} minutes"
+    end
     puts
 end
