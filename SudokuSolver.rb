@@ -1,16 +1,52 @@
 
 class Sudoku
 
-    attr_reader :path, :puzzle, :n, :num_guesses
+    attr_reader :puzzle, :n, :b, :num_guesses
 
-    def initialize path
-        @path = path
+    def initialize 
         @n = 0
         @b = 0
         @puzzle = []
         @num_guesses = 0
         @known_indices = []
-        load_puzzle
+    end
+
+    def load_puzzle puzzle_string
+        @puzzle = []
+        @known_indices = []
+        rows = puzzle_string.split '\n'
+        @n = rows.length
+        @b = Math.sqrt(@n).to_i
+        i = 0
+        rows.each do |row|
+            row.each_char do |c|
+                if c =~ /\d/
+                    @puzzle << c.to_i
+                    @known_indices << i if c.to_i != 0
+                    i += 1
+                end
+            end
+        end
+    end
+
+    def load_puzzle_from_file path
+        @n = 0
+        @puzzle = []
+        @known_indices = []
+        File::open(path, 'r') do |file|
+            i = 0
+            while content = file.gets
+                @n = content.to_s.length - 1 if @n == 0
+                content.to_s.each_char do |c|
+                    if c =~ /\d/
+                        @puzzle << c.to_i
+                        @known_indices << i if c.to_i != 0
+                        i += 1
+                    end
+                end
+            end
+        end
+        @b = Math.sqrt(@n).to_i
     end
 
     def to_s
@@ -143,31 +179,12 @@ class Sudoku
 
         return true
     end
-
-    def load_puzzle
-        @n = 0
-        @puzzle = []
-        File::open(@path, 'r') do |file|
-            i = 0
-            while content = file.gets
-                @n = content.to_s.length - 1 if @n == 0
-                content.to_s.each_char do |c|
-                    if c =~ /\d/
-                        @puzzle << c.to_i
-                        @known_indices << i if c.to_i != 0
-                        i += 1
-                    end
-                end
-            end
-        end
-        @b = Math.sqrt(@n).to_i
-    end
-
 end
 
 
 if __FILE__ == $0
-    s = Sudoku.new ARGV[0]
+    s = Sudoku.new 
+    s.load_puzzle_from_file ARGV[0]
 
     puts
     puts 'Puzzle:'
